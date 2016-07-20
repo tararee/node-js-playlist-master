@@ -1,3 +1,4 @@
+require('dotenv').config();
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
@@ -9,6 +10,7 @@ sequelize.sync(); // sequelize.sync({ force: true }); // drops the table and rec
 app.use(bodyParser.json());
 
 app.use(require('./middleware/headers'));
+app.use(require('./middleware/validate-session'));
 
 // create user route
 app.use('/api/user', require('./routes/user'));
