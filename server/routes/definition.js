@@ -1,6 +1,6 @@
 var router = require('express').Router();
 var sequelize = require('../db');
-var Definition = require('../models/definition');
+var Definition = sequelize.import('../models/definition');
 
 // create definition
 router.post('/', function(req, res) {
@@ -27,6 +27,19 @@ router.post('/', function(req, res) {
 
 //fetch definitions by userid
 router.get('/', function(req, res) {
+	var owner = req.user.id; //shortify
+	Definition
+	.findAll({
+			where: { owner: owner }
+		})
+	.then(
+		function findAllSuccess(data) {
+			res.json(data);
+		},
+		function findAllError(err) {
+			res.send(500, err.message);	
+		}
+	);
 
 });
 

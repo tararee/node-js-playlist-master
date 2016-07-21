@@ -16,6 +16,8 @@ app.use(require('./middleware/validate-session'));
 app.use('/api/user', require('./routes/user'));
 // login route
 app.use('/api/login', require('./routes/session'));
+// defintions route
+app.use('/api/definition', require('./routes/definition'));
 
 // Test route for api http://localhost:3000/api/test
 app.use('/api/test', function(req, res) {
