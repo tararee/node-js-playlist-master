@@ -1,8 +1,11 @@
 var events = require('events');
 //node has a built-in module called events
 
-element.on('click', function(){})
-//this is an event listener
-//like in jquery
-//this would create an element that fired a function
-//every time an event was emitted (click)
+//we can create custom events that do what we want
+
+var myEmitter = new events.EventEmitter();
+myEmitter.on('someEvent', function(mssg){
+	console.log(mssg);
+});
+
+myEmitter.emit('someEvent', 'the event was emitted');
