@@ -3,9 +3,12 @@
 //we set it as a variable, and then we can call the variable
 // from the count.js:
 
-var counter = require ('./count');
+var stuff = require ('./stuff');
 
-console.log(counter(['shaun','crystal', 'ryu']));
+console.log(stuff.counter(['shaun','crystal', 'ryu']));
+console.log(stuff.adder(5,6));
 
 //So at this point, if we go to the console and
-//type node app, it will return "There are 3 elements in this array"
+//type node app, it willreturn
+// "There are 3 elements in this array"
+//and also "The sum of the 2 numbers is 11"
