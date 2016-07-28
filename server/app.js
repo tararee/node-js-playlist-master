@@ -18,6 +18,8 @@ app.use('/api/user', require('./routes/user'));
 app.use('/api/login', require('./routes/session'));
 // defintions route
 app.use('/api/definition', require('./routes/definition'));
+// log route
+app.use('/api/log', require('./routes/log'));
 
 // Test route for api http://localhost:3000/api/test
 app.use('/api/test', function(req, res) {
