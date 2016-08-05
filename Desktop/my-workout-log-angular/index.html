@@ -8,19 +8,11 @@
      <link rel="stylesheet" href="/content/app.css" >
    </head>
    <body>
-
-   	  <div class="container wrap">
-   	  	<div class="row">
-   	  		<div class="col-xs-12">
-	   	  		<header>
-	   	  			<div class="well">
-	   	  				Workout Log
-	   	  			</div>
-	  			</header>
-  			</div>
-		      <div ui-view></div>
-	      </div>
-	  </div>
+    <nav class ="navbar navbar-default">
+      <a class ="navbar-brand" ui-sref-"signin">Workout Log</a>
+      <userlinks></userlinks>
+   </nav>
+<div ui-view></div>
 
       <script src="bower_components/angular-loader/angular-loader.min.js"></script>
       <script src="bower_components/angular/angular.min.js"></script>

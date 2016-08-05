@@ -7,7 +7,7 @@
 			$stateProvider
 				.state('signup', {
 					url: '/signup',
-					templateUrl: '/auth/signup.html',
+					templateUrl: '/components/auth/signup.html',
 					controller: SignUpController,
 					controllerAs: 'ctrl',
 					bindToController: this

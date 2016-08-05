@@ -2,6 +2,8 @@
 	var app = angular.module('workoutlog', [
 		'ui.router',
 		'workoutlog.define',
+		'workoutlog.logs',
+		'workoutlog.history',
 		'workoutlog.auth.signup',
 		'workoutlog.auth.signin',
 	]);
