@@ -3,9 +3,11 @@
     <label>Result</label>
     <input type="text" class="form-control"  ng-model="ctrl.log.result"/>
     <label>Workout Select</label>
-    <select class="form-control" ng-options="desc as def.description for def in ctrl.userDefinitions track by def.description" ng-model="ctrl.log.def">
+        <select class="form-control" 
+    ng-options="item.description as item.description for item in ctrl.userDefinitions" ng-model="ctrl.log.def">
     </select>
     <label>Notes</label>
     <textarea class="form-control" rows="3" ng-model="ctrl.log.desc" ></textarea>
     <button class="btn btn-primary" ng-click="ctrl.save()">Save</button>
 </div>
+    

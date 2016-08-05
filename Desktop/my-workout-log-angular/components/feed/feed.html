@@ -1,0 +1,11 @@
+<div class="col-sm-12">
+	<h2>If I Had $1,000,000 worth of feeds</h2>
+	<ul class="list-group">
+		<li ng-repeat="item in ctrl.feed" class="list-group-item">
+			{{ item.username }} {{ item.message }}
+		</li>
+	</ul>
+	<label>Send a Message</label>
+	<textarea class="form-control" ng-model="ctrl.msg.message" rows="3"></textarea>
+	<button ng-click="ctrl.create()" class="btn btn-primary">Send</button>
+</div>

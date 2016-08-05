@@ -1,20 +1,78 @@
 (function() {
 	var app = angular.module('workoutlog', [
+		'btford.socket-io',
 		'ui.router',
 		'workoutlog.define',
+		'workoutlog.feed',
 		'workoutlog.logs',
 		'workoutlog.history',
 		'workoutlog.auth.signup',
-		'workoutlog.auth.signin',
-	]);
+		'workoutlog.auth.signin'
+	])
+	.factory('socket', function(socketFactory) {
+		var myIoSocket = io.connect('http://localhost:3000');
+		
+		var socket = socketFactory({
+			ioSocket: myIoSocket
+		});
+
+		return socket;
+	});
 
 	function config($urlRouterProvider) {
-		$urlRouterProvider.otherwise('/signin');
+		$urlRouterProvider.otherwise('/signup');
 	}
 
 	config.$inject = [ '$urlRouterProvider' ];
+	
 	app.config(config);
 	app.constant('API_BASE', '//localhost:3000/api/');
+})();
+(function() {
+	angular.module('workoutlog.feed', [ 'ui.router' ])
+	.config(feedConfig);
+
+	feedConfig.$inject = [ '$stateProvider' ];
+
+	function feedConfig($stateProvider) {
+		$stateProvider
+			.state('feed', {
+				url: '/feed',
+				templateUrl: '/components/feed/feed.html',
+				controller: FeedController,
+				controllerAs: 'ctrl',
+				bindToController: this,
+				resolve: {
+					getFeed: [
+						'FeedService',
+						function(FeedService) {
+							return FeedService.fetch();
+						}
+					]
+				}
+			});
+	}
+
+	FeedController.$inject = [ 'socket', 'FeedService', 'CurrentUser' ];
+	function FeedController(socket, FeedService, CurrentUser) {
+		var vm = this;
+		vm.msg = {};
+		vm.feed = FeedService.get();
+
+		vm.create = function() {
+			vm.msg.username = CurrentUser.get().username;
+			socket.emit('chat-message', vm.msg);
+			vm.msg.message = '';
+		};
+
+		socket.on('new log', function(data) {
+			vm.feed.push(data);
+		});
+
+		socket.on('chat-message', function(data) {
+			vm.feed.push(data);
+		});
+	}
 })();
 (function() {
 	angular.module('workoutlog.auth.signin', [
@@ -290,6 +348,27 @@
 
 		defineService.getDefinitions = function() {
 			return defineService.userDefinitions;
+		};
+	}
+})();
+(function() {
+	angular.module('workoutlog')
+	.service('FeedService', FeedService);
+
+	FeedService.$inject = [ '$http', 'API_BASE', 'socket' ];
+	function FeedService($http, API_BASE, socket) {
+		var feedService = this;
+		feedService.feed = [];
+
+		feedService.fetch = function() {
+			return $http.get(API_BASE + 'feed')
+			.then(function(response) {
+				feedService.feed = response.data;
+			});
+		};
+
+		feedService.get = function() {
+			return feedService.feed;
 		};
 	}
 })();
